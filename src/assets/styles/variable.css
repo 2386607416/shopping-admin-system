@@ -1,0 +1,15 @@
+:root {
+    --color-primary: rgb(104, 133, 255);
+    --color-white: rgb(255, 255, 255);
+    --color-black: rgb(0, 0, 0);
+    --color-primary-light: rgb(235, 240, 254);
+    --color-text: rgb(188, 194, 210);
+    --color-text-light-1: rgb(182, 188, 202);
+    --color-text-light-2: rgb(235, 239, 247);
+    --color-text-light-3: rgb(239, 242, 251);
+    --color-text-light-4: rgb(242, 245, 253);
+    --color-text-light-5: rgb(245, 247, 253);
+    --color-pink: rgb(241, 103, 168);
+    --color-danger: rgb(211, 18, 18);
+    --color-success: rgb(28, 187, 65);
+}
