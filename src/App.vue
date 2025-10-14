@@ -1,5 +1,7 @@
 <script setup>
+import { ref } from "vue";
 import { formatDatetime } from "./utils";
+import Avatar from "./components/Avatar/index.vue";
 
 const datetime = formatDatetime(
     Date.now(),
@@ -8,13 +10,49 @@ const datetime = formatDatetime(
     },
     true
 );
+
+/**
+ * 搜索
+ */
+const search = ref("");
+
+function handleSubmitSearch(event) {}
+
+/**
+ * 头像
+ */
+const avatarSrc =
+    "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg";
+
+function handleLoad(event) {}
+
+/**
+ * 菜单
+ */
+const menus = [
+    {
+        name: "home",
+        icon: "icon-shangdian",
+        title: "首页",
+    },
+    {
+        name: "statement",
+        icon: "icon-shuju",
+        title: "账单",
+    },
+    {
+        name: "setting",
+        icon: "icon-shezhi",
+        title: "设置",
+    },
+];
 </script>
 
 <template>
-    <div class="layout-container">
-        <header class="header">
+    <div class="header-layout flex-column">
+        <header class="header flex-row">
             <h1 class="logo">
-                <a class="home-link" href="/">
+                <a class="home-link flex-column" href="/">
                     <img
                         class="image"
                         src="./assets/images/logo.png"
@@ -25,43 +63,86 @@ const datetime = formatDatetime(
                     </span>
                 </a>
             </h1>
-            <div class="right-container">
-                <div class="banner">
+            <div class="right-container flex-row shadow">
+                <div class="banner flex-column">
                     <h2 class="title">Dashboard</h2>
                     <time class="time" v-bind:datetime="datetime">
                         {{ datetime }}
                     </time>
                 </div>
+                <form class="form" v-on:submit.prevent="handleSubmitSearch">
+                    <label class="label" for="search">
+                        <input
+                            id="search"
+                            class="input"
+                            type="text"
+                            placeholder="请输入需要搜索的内容..."
+                            v-model.lazy="search"
+                        />
+                    </label>
+                    <button class="button" type="submit">
+                        <img src="./assets/images/search.svg" alt="搜索" />
+                    </button>
+                </form>
+                <div class="user-info flex-row">
+                    <span class="iconfont icon-xinxi message"></span>
+                    <Avatar
+                        size="3.8125rem"
+                        v-bind:circle="true"
+                        v-on:load="handleLoad"
+                        v-bind:src="avatarSrc"
+                    />
+                </div>
             </div>
         </header>
+        <div class="main-layout flex-row">
+            <aside class="aside">
+                <menu class="menu flex-column">
+                    <li
+                        class="item"
+                        v-for="({ name, icon, title }, index) of menus"
+                        v-bind:key="index"
+                        v-bind:title="title"
+                    >
+                        <RouterLink class="link" v-bind:to="{ name }">
+                            <span
+                                class="iconfont icon"
+                                v-bind:class="icon"
+                            ></span>
+                        </RouterLink>
+                    </li>
+                </menu>
+            </aside>
+            <main class="main">
+                <RouterView></RouterView>
+            </main>
+        </div>
     </div>
 </template>
 
 <style lang="less" scoped>
 @import url("@/assets/styles/variable.css");
 
-.layout-container {
-    display: flex;
-    flex-direction: column;
+.header-layout {
+    justify-content: flex-start;
     width: 100%;
     height: 100%;
+    gap: 3.125rem;
     box-sizing: border-box;
 
     .header {
-        display: flex;
         width: 100%;
         height: 11.5rem;
+        flex-shrink: 0;
         justify-content: space-between;
-        align-items: center;
         box-sizing: border-box;
+        gap: 7.3215rem;
 
         .logo {
             font-weight: normal;
+            margin: 0rem 2.7875rem;
 
             .home-link {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
                 align-items: flex-start;
                 gap: 1.125rem;
 
@@ -82,15 +163,15 @@ const datetime = formatDatetime(
         }
 
         .right-container {
-            display: flex;
             justify-content: space-between;
-            align-items: center;
             width: 100%;
+            height: 100%;
+            padding-left: 2.5625rem;
+            padding-right: 5.1875rem;
+            background-color: var(--color-white);
+            border-radius: 0 0 1.9375rem 1.9375rem;
 
             .banner {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
                 align-items: flex-start;
                 gap: 0.875rem;
 
@@ -105,6 +186,143 @@ const datetime = formatDatetime(
                     line-height: 0.9375rem;
                 }
             }
+
+            .form {
+                position: relative;
+
+                .label {
+                    display: block;
+                    width: 39.3125rem;
+                    height: 3.5625rem;
+                    box-sizing: border-box;
+                    border-radius: 0.625rem;
+                    background-color: var(--color-text-light-4);
+
+                    .input {
+                        width: 100%;
+                        height: 100%;
+                        font-size: 0.875rem;
+                        padding-left: 1.5625rem;
+                        box-sizing: border-box;
+                        border-radius: 0.625rem;
+                        background-color: var(--color-text-light-4);
+                        border: none;
+
+                        &::placeholder {
+                            color: var(--color-text-light-1);
+                            font-size: 0.875rem;
+                        }
+
+                        &:focus {
+                            outline: none;
+                        }
+                    }
+                }
+
+                .button {
+                    position: absolute;
+                    top: 50%;
+                    right: 0rem;
+                    transform: translateY(-50%);
+                    width: 2.795rem;
+                    height: 2.648125rem;
+                    margin-right: 0.625rem;
+                    box-sizing: border-box;
+                    background-color: var(--color-primary);
+                    border: none;
+                    border-radius: 0.625rem;
+                    cursor: pointer;
+                }
+            }
+
+            .user-info {
+                gap: 3.625rem;
+
+                .message {
+                    display: flex;
+                    align-items: center;
+                    font-size: 2.125rem;
+                }
+            }
+        }
+    }
+
+    .main-layout {
+        width: 100%;
+        height: 100%;
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: auto;
+        justify-content: flex-start;
+        padding-right: 7.3125rem;
+        box-sizing: border-box;
+        gap: 7.3125rem;
+
+        .aside {
+            width: 11.0625rem;
+            height: 100%;
+            flex-shrink: 0;
+            padding: 1.9375rem 0;
+            border-radius: 0 1.9375rem 1.9375rem 0;
+            background-color: var(--color-white);
+            box-sizing: border-box;
+
+            .menu {
+                justify-content: flex-start;
+                width: 100%;
+                height: 100%;
+                list-style: none;
+                background-color: var(--color-white);
+
+                .item {
+                    width: 100%;
+                    height: 4.036875rem;
+                    text-align: center;
+
+                    .link {
+                        display: block;
+                        position: relative;
+                        width: 100%;
+                        height: 100%;
+                        color: var(--color-primary-light-1);
+                        font-weight: bolder;
+                        box-sizing: border-box;
+
+                        .icon {
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translateY(-50%) translateX(-50%);
+                            font-size: 1.875rem;
+                        }
+                    }
+
+                    .router-link-active {
+                        color: var(--color-primary);
+                        background-color: var(--color-primary-light-3);
+
+                        &::after {
+                            content: "";
+                            position: absolute;
+                            right: 0rem;
+                            top: 0rem;
+                            width: 0.3125rem;
+                            height: 100%;
+                            border-radius: 0.3125rem;
+                            background-color: var(--color-primary);
+                        }
+                    }
+                }
+            }
+        }
+
+        .main {
+            width: 100%;
+            height: 100%;
+            flex-grow: 1;
+            flex-shrink: 1;
+            flex-basis: auto;
+            box-sizing: border-box;
         }
     }
 }

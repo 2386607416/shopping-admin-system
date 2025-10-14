@@ -1,8 +1,10 @@
 :root {
     --color-primary: rgb(104, 133, 255);
+    --color-primary-light-1: rgb(136, 160, 255);
+    --color-primary-light-2: rgb(235, 240, 254);
+    --color-primary-light-3: rgb(240, 243, 255);
     --color-white: rgb(255, 255, 255);
     --color-black: rgb(0, 0, 0);
-    --color-primary-light: rgb(235, 240, 254);
     --color-text: rgb(188, 194, 210);
     --color-text-light-1: rgb(182, 188, 202);
     --color-text-light-2: rgb(235, 239, 247);
