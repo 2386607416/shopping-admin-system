@@ -1,7 +1,11 @@
 <script setup>
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import { formatDatetime } from "./utils";
 import Avatar from "./components/Avatar/index.vue";
+
+defineOptions({
+    name: "App",
+});
 
 const datetime = formatDatetime(
     Date.now(),
@@ -29,23 +33,34 @@ function handleLoad(event) {}
 /**
  * 菜单
  */
-const menus = [
+const menus = reactive([
     {
         name: "home",
         icon: "icon-shangdian",
         title: "首页",
+        showTitle: false,
     },
     {
         name: "statement",
         icon: "icon-shuju",
         title: "账单",
+        showTitle: false,
     },
     {
         name: "setting",
         icon: "icon-shezhi",
         title: "设置",
+        showTitle: false,
     },
-];
+]);
+
+function handleMouseEnter(index) {
+    menus[index].showTitle = true;
+}
+
+function handleMouseLeave(index) {
+    menus[index].showTitle = false;
+}
 </script>
 
 <template>
@@ -100,9 +115,12 @@ const menus = [
                 <menu class="menu flex-column">
                     <li
                         class="item"
-                        v-for="({ name, icon, title }, index) of menus"
+                        v-for="(
+                            { name, icon, title, showTitle }, index
+                        ) of menus"
                         v-bind:key="index"
-                        v-bind:title="title"
+                        v-on:mouseenter="handleMouseEnter(index)"
+                        v-on:mouseleave="handleMouseLeave(index)"
                     >
                         <RouterLink class="link" v-bind:to="{ name }">
                             <span
@@ -110,6 +128,9 @@ const menus = [
                                 v-bind:class="icon"
                             ></span>
                         </RouterLink>
+                        <small v-show="showTitle" class="tip-title">
+                            {{ title }}
+                        </small>
                     </li>
                 </menu>
             </aside>
@@ -262,7 +283,7 @@ const menus = [
             width: 11.0625rem;
             height: 100%;
             flex-shrink: 0;
-            padding: 1.9375rem 0;
+            padding: 2.6875rem 0;
             border-radius: 0 1.9375rem 1.9375rem 0;
             background-color: var(--color-white);
             box-sizing: border-box;
@@ -273,8 +294,10 @@ const menus = [
                 height: 100%;
                 list-style: none;
                 background-color: var(--color-white);
+                gap: 2.5625rem;
 
                 .item {
+                    position: relative;
                     width: 100%;
                     height: 4.036875rem;
                     text-align: center;
@@ -297,6 +320,33 @@ const menus = [
                         }
                     }
 
+                    .tip-title {
+                        position: absolute;
+                        right: -4rem;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        display: block;
+                        color: var(--color-white);
+                        background-color: var(--color-black);
+                        padding: 0.5rem;
+                        border-radius: 0.5rem;
+                        text-align: center;
+
+                        &::before {
+                            content: "";
+                            position: absolute;
+                            left: -0.4rem;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            width: 0rem;
+                            height: 0rem;
+                            border-top: transparent solid 0.5rem;
+                            border-right: var(--color-black) solid 0.5rem;
+                            border-bottom: transparent solid 0.5rem;
+                            z-index: -1;
+                        }
+                    }
+
                     .router-link-active {
                         color: var(--color-primary);
                         background-color: var(--color-primary-light-3);
@@ -311,6 +361,10 @@ const menus = [
                             border-radius: 0.3125rem;
                             background-color: var(--color-primary);
                         }
+                    }
+
+                    &:last-child {
+                        margin-top: auto;
                     }
                 }
             }
