@@ -1,6 +1,8 @@
 <script setup>
 import { reactive } from "vue";
 import OrderBoard from "./OrderBoard/index.vue";
+import OrderList from "./OrderList/index.vue";
+import OrderChart from "./OrderChart/index.vue";
 import { formatDatetime, formatMoney } from "@/utils";
 
 defineOptions({
@@ -59,11 +61,45 @@ function handleMouseEnter(index) {
 function handleMouseLeave(index) {
     orders[index].shadow = false;
 }
+
+/**
+ * 销售列表
+ */
+const sellerData = [
+    {
+        avatarSrc:
+            "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+        name: "Striped Shirt Dress",
+        sold: 250,
+        sales: `￥${formatMoney(2125)}`,
+    },
+    {
+        avatarSrc:
+            "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+        name: "Detachable Gilet Clothing",
+        sold: 190,
+        sales: `￥${formatMoney(1902)}`,
+    },
+    {
+        avatarSrc:
+            "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+        name: "Effect Brifcase Jean",
+        sold: 180,
+        sales: `￥${formatMoney(1025)}`,
+    },
+    {
+        avatarSrc:
+            "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+        name: "Furry Hooded Skirts",
+        sold: 150,
+        sales: `￥${formatMoney(1235)}`,
+    },
+];
 </script>
 
 <template>
     <div class="statement-container statement flex-column">
-        <div class="order-board flex-row">
+        <div class="order-board-list flex-row">
             <div class="left-container flex-column">
                 <ul class="order flex-row">
                     <li
@@ -108,11 +144,18 @@ function handleMouseLeave(index) {
                         />
                     </li>
                 </ul>
-                <div class="order-chart"></div>
+                <div class="order-chart shadow"></div>
             </div>
             <div class="right-container"></div>
+            <div class="right-container"></div>
         </div>
-        <div class="order-list"></div>
+        <div class="order-sales-list flex-row">
+            <div class="sales-list">
+                <OrderList v-bind:sellerData="sellerData" />
+            </div>
+            <div class="total-chart"></div>
+            <div class="total-chart"></div>
+        </div>
     </div>
 </template>
 

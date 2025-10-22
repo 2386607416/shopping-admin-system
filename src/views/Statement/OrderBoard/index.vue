@@ -92,7 +92,7 @@ const countIcon = computed(() => {
 </script>
 
 <template>
-    <div class="order-container order">
+    <div class="order-board-container order-board">
         <div
             class="top-container flex-row"
             v-bind:style="{ 'background-color': topBackgroundColor }"

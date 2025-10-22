@@ -67,11 +67,16 @@ function handleMouseLeave(index) {
     <div class="header-layout flex-column">
         <header class="header flex-row">
             <h1 class="logo">
-                <a class="home-link flex-column" href="/">
+                <a
+                    class="home-link flex-column"
+                    href="/"
+                    v-bind:draggable="false"
+                >
                     <img
                         class="image"
                         src="./assets/images/logo.png"
                         alt="标志"
+                        v-bind:draggable="false"
                     />
                     <span class="text">
                         E&nbsp;&nbsp;S&nbsp;&nbsp;H&nbsp;&nbsp;O&nbsp;&nbsp;P
@@ -95,9 +100,7 @@ function handleMouseLeave(index) {
                             v-model.lazy="search"
                         />
                     </label>
-                    <button class="button" type="submit">
-                        <img src="./assets/images/search.svg" alt="搜索" />
-                    </button>
+                    <button class="button" type="submit"></button>
                 </form>
                 <div class="user-info flex-row">
                     <span class="iconfont icon-xinxi message"></span>
@@ -250,6 +253,10 @@ function handleMouseLeave(index) {
                     margin-right: 0.625rem;
                     box-sizing: border-box;
                     background-color: var(--color-primary);
+                    background-image: url("@/assets/images/search.svg");
+                    background-repeat: no-repeat;
+                    background-size: 1.6875rem 1.6875rem;
+                    background-position: center;
                     border: none;
                     border-radius: 0.625rem;
                     cursor: pointer;
