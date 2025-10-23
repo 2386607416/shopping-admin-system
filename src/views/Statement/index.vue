@@ -95,6 +95,20 @@ const sellerData = [
         sales: `￥${formatMoney(1235)}`,
     },
 ];
+
+/**
+ * 销售额图表
+ */
+const charts = [
+    {
+        title: "访客流量",
+        subTitle: "线上和线下",
+    },
+    {
+        title: "品类销售额",
+        subTitle: "本月总额",
+    },
+];
 </script>
 
 <template>
@@ -146,15 +160,35 @@ const sellerData = [
                 </ul>
                 <div class="order-chart shadow"></div>
             </div>
-            <div class="right-container"></div>
-            <div class="right-container"></div>
+            <div class="right-container shadow">
+                <OrderChart
+                    v-bind:title="charts[0].title"
+                    v-bind:subTitle="charts[0].subTitle"
+                />
+            </div>
+            <div class="right-container shadow">
+                <OrderChart
+                    v-bind:title="charts[0].title"
+                    v-bind:subTitle="charts[0].subTitle"
+                />
+            </div>
         </div>
         <div class="order-sales-list flex-row">
             <div class="sales-list">
                 <OrderList v-bind:sellerData="sellerData" />
             </div>
-            <div class="total-chart"></div>
-            <div class="total-chart"></div>
+            <div class="total-chart shadow">
+                <OrderChart
+                    v-bind:title="charts[1].title"
+                    v-bind:subTitle="charts[1].subTitle"
+                />
+            </div>
+            <div class="total-chart shadow">
+                <OrderChart
+                    v-bind:title="charts[1].title"
+                    v-bind:subTitle="charts[1].subTitle"
+                />
+            </div>
         </div>
     </div>
 </template>
