@@ -277,12 +277,11 @@ function handleMouseLeave(index) {
 
     .main-layout {
         width: 100%;
-        height: 100%;
         flex-grow: 1;
         flex-shrink: 1;
         flex-basis: auto;
-        justify-content: flex-start;
         padding-right: 7.3125rem;
+        justify-content: flex-start;
         box-sizing: border-box;
         gap: 7.3125rem;
 
